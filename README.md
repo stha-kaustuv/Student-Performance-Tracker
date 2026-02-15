@@ -56,7 +56,9 @@ From my initial **Exploratory Data Analysis (EDA)**, several key correlations we
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/student-performance-tracker.git
+git clone git@github.com:stha-kaustuv/Student-Performance-Tracker.git
+or
+git clone https://github.com/stha-kaustuv/Student-Performance-Tracker.git
 cd student-performance-tracker
 
 ```
