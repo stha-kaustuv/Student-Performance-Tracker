@@ -18,16 +18,12 @@ const form = reactive({
 const predictionResult = ref(null);
 
 // const handlePredict = async () => {
-//   // This is where you will eventually call your Python API
-//   console.log("Sending data to API:", form);
 
-//   // Placeholder for the logic we did in Python
+//   console.log("Sending data to API:", form);
 //   // predictionResult.value = await api.post('/predict', form);
 //   predictionResult.value = 68.16;
 // };
 const handlePredict = async () => {
-  // 1. Define the "Base Profile" (The 16 features the user doesn't see)
-  // These should be the most common values from your training data
   const baseProfile = {
     Parental_Involvement: 2, // Medium
     Access_to_Resources: 2, // Medium
@@ -47,7 +43,6 @@ const handlePredict = async () => {
     Gender: 1, // Neutral
   };
 
-  // 2. Merge with User Inputs (The "Big Three")
   const fullPayload = {
     ...baseProfile,
     Hours_Studied: form.hoursStudied,
@@ -55,11 +50,8 @@ const handlePredict = async () => {
     Previous_Scores: form.previousScore,
   };
 
-  // 3. Send to Backend
-  // The backend will then re-order these to match the X.columns list
   console.log("Full 19-feature payload ready for model:", fullPayload);
 
-  // Example API call:
   // const response = await axios.post('http://localhost:5000/predict', fullPayload);
   // predictionResult.value = response.data.prediction;
 };
