@@ -68,9 +68,9 @@ import {
             </div>
 
             <!-- Main Content -->
-            <div class="w-4/6 p-4">
-              <p class="text-xl font-semibold mb-4">Main Content Area</p>
-              <slot>
+            <div class="w-5/6 p-4 pl-8">
+              <!-- <p class="text-xl font-semibold mb-4">Main Content Area</p> -->
+              <slot class="w-full">
                 <router-view />
               </slot>
             </div>

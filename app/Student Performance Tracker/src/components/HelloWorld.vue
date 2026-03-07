@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from "vue";
+import Card from "./Card.vue";
 
 defineProps({
   msg: String,
@@ -14,27 +15,10 @@ const countMessage = computed(() => {
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
   <div class="">
-    <p class="">{{ countMessage }}</p>
-    <div class="flex gap-2">
-      <button
-        class="p-2 w-7 h-7 bg-black text-white cursor-pointer"
-        type="button"
-        @click="count++"
-      >
-        +
-      </button>
-      <button
-        class="p-2 w-7 h-7 bg-black text-white cursor-pointer"
-        type="button"
-        @click="count--"
-      >
-        -
-      </button>
+    <div>
+      <Card />
     </div>
-    <p>Hello World</p>
   </div>
 </template>
 
