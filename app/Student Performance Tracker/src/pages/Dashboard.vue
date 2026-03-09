@@ -1,13 +1,62 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import Card from "../components/Card.vue";
+import axios from "axios";
+import { onMounted } from "vue";
 
-const cardDesc = [
-  { title: "Model Accuracy", description: "R²: 0.66" },
-  { title: "Total Features", description: "19 Variables" },
-  { title: "High Risk Threshold", description: "< 40" },
-  { title: "Top Driver", description: "Attendance" },
-];
+const modelInfo = ref();
+const modelType = ref();
+const getModel = () => {
+  axios.get("http://127.0.0.1:5000/model-info").then((response) => {
+    modelInfo.value = response.data;
+    modelType.value = modelInfo.value.find(
+      (item) => item.title === "Model Type"
+    );
+
+    console.log("Model Type:", modelType.value);
+    console.log("Model Info:", modelInfo.value);
+  });
+};
+const model = computed(() => {
+  if (modelType.value) {
+    return modelType.value.value;
+  }
+  return null;
+});
+const handlePredict = () => {
+  const baseProfile = {
+    Parental_Involvement: 3,
+    Access_to_Resources: 3,
+    Extracurricular_Activities: 1,
+    Sleep_Hours: 8,
+    Motivation_Level: 3,
+    Internet_Access: 1,
+    Tutoring_Sessions: 5,
+    Family_Income: 3,
+    Teacher_Quality: 3,
+    School_Type: 1,
+    Peer_Influence: 3,
+    Physical_Activity: 3,
+    Learning_Disabilities: 0,
+    Parental_Education_Level: 3,
+    Distance_from_Home: 0,
+    Gender: 1,
+  };
+
+  const fullPayload = {
+    ...baseProfile,
+    Hours_Studied: form.hoursStudied,
+    Attendance: form.attendance,
+    Previous_Scores: form.previousScore,
+  };
+  axios.post("http://127.0.0.1:5000/predict", fullPayload).then((response) => {
+    predictionResult.value = response.data.predicted_score;
+    console.log("Prediction Result:", predictionResult.value);
+  });
+};
+onMounted(() => {
+  getModel();
+});
 
 const form = reactive({
   attendance: 95,
@@ -23,38 +72,6 @@ const predictionResult = ref(null);
 //   // predictionResult.value = await api.post('/predict', form);
 //   predictionResult.value = 68.16;
 // };
-const handlePredict = async () => {
-  const baseProfile = {
-    Parental_Involvement: 2, // Medium
-    Access_to_Resources: 2, // Medium
-    Extracurricular_Activities: 0, // No
-    Sleep_Hours: 7,
-    Motivation_Level: 2, // Medium
-    Internet_Access: 1, // Yes
-    Tutoring_Sessions: 0,
-    Family_Income: 2, // Medium
-    Teacher_Quality: 2, // Medium
-    School_Type: 0, // Public
-    Peer_Influence: 2, // Neutral
-    Physical_Activity: 2,
-    Learning_Disabilities: 0, // No
-    Parental_Education_Level: 2, // High School/College
-    Distance_from_Home: 1, // Near
-    Gender: 1, // Neutral
-  };
-
-  const fullPayload = {
-    ...baseProfile,
-    Hours_Studied: form.hoursStudied,
-    Attendance: form.attendance,
-    Previous_Scores: form.previousScore,
-  };
-
-  console.log("Full 19-feature payload ready for model:", fullPayload);
-
-  // const response = await axios.post('http://localhost:5000/predict', fullPayload);
-  // predictionResult.value = response.data.prediction;
-};
 </script>
 
 <template>
@@ -64,10 +81,10 @@ const handlePredict = async () => {
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-      <div v-for="(card, index) in cardDesc" :key="index">
+      <div v-for="(card, index) in modelInfo" :key="index">
         <Card
           :title="card.title"
-          :description="card.description"
+          :description="card.value"
           class="hover:shadow-lg transition"
         />
       </div>
@@ -129,7 +146,7 @@ const handlePredict = async () => {
           {{ predictionResult ? predictionResult : "--" }}
         </div>
         <p class="text-blue-100 text-center text-sm">
-          This prediction is based on the trained Random Forest model.
+          This prediction is based on the {{ model }} model.
         </p>
       </div>
     </div>
