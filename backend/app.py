@@ -29,13 +29,13 @@ def predict():
     try:
         data = request.json
 
-        # Convert to DataFrame and ensure correct column order
+      
         input_df = pd.DataFrame([data])
         input_df = input_df.reindex(columns=columns, fill_value=0)
 
         prediction = model.predict(input_df)
 
-        # Round to 2 decimal places for a clean UI
+       
         return jsonify({"predicted_score": round(float(prediction[0]), 2)})
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -44,10 +44,7 @@ def predict():
 @app.route("/model-info", methods=["GET"])
 def get_model_info():
     try:
-        # Reload metadata in case it was updated in the notebook
         metadata = load_metadata()
-
-        # Dynamically find the Top Driver from model weights
         weights = pd.Series(model.coef_, index=columns)
         top_driver = weights.abs().idxmax()
 
