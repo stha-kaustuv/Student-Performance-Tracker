@@ -29,7 +29,7 @@ import {
         <div class="w-full p-4">
           <div class="flex h-screen">
             <!-- Sidebar -->
-            <div class="w-1/6 h-full p-4 border-r-2 border-gray-300">
+            <div class="w-1/6 h-auto p-4">
               <p class="text-xl font-semibold mb-4">Sidebar</p>
               <ul class="space-y-2">
                 <router-link
