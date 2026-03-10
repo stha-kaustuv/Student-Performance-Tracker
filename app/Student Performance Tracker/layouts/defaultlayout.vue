@@ -44,12 +44,13 @@ import {
                 <router-link
                   to="/students"
                   class="flex items-center gap-2 p-2 rounded hover:bg-gray-200 cursor-pointer"
+                  :class="$route.path === '/students' ? 'bg-gray-200' : ''"
                 >
                   <UserGroupIcon class="w-6 h-6 text-black" />
                   Students
                 </router-link>
 
-                <router-link
+                <!-- <router-link
                   to="/performance"
                   class="flex items-center gap-2 p-2 rounded hover:bg-gray-200 cursor-pointer"
                 >
@@ -63,7 +64,7 @@ import {
                 >
                   <Cog6ToothIcon class="w-6 h-6 text-black" />
                   Settings
-                </router-link>
+                </router-link> -->
               </ul>
             </div>
 

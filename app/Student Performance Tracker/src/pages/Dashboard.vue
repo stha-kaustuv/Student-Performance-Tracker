@@ -86,9 +86,7 @@ const predictionResult = ref(null);
 
 <template>
   <div class="p-8 bg-gray-50 min-h-screen border-l-2 border-gray-200">
-    <p class="text-2xl font-bold mb-6 text-gray-800">
-      Student Success Dashboard
-    </p>
+    <p class="text-2xl font-bold mb-6 text-gray-800">Dashboard</p>
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
       <div v-for="(card, index) in modelInfo" :key="index">
