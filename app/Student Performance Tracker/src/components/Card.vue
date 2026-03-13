@@ -25,4 +25,3 @@ const props = defineProps({
     </div>
   </div>
 </template>
-gray-600
