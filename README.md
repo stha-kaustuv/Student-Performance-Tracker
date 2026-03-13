@@ -52,9 +52,11 @@ From my initial **Exploratory Data Analysis (EDA)**, several key correlations we
 ├── README.md                          # Project Documentation
 └── requirements.txt                   # Project Dependencies
 ```
+
 ## ▶️ How to Run the Project
 
 ### 1️⃣ Clone the Repository
+
 ```bash
 git clone git@github.com:stha-kaustuv/Student-Performance-Tracker.git
 or
@@ -64,13 +66,16 @@ cd student-performance-tracker
 ```
 
 ### 2.Set Up a Virtual Environment (Recommended)
+
 #### windows:
+
 ```bash
 python -m venv venv
 .\venv\Scripts\activate
 ```
 
 #### macOS/Linux:
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate
@@ -83,7 +88,45 @@ pip install -r requirements.txt
 ```
 
 ### 4. Run the Analysis
+
 #### Launch Jupyter Notebook or VS Code to run the tracker
+
 ```bash
 jupyter notebook
+```
+
+### 4. Run the Backend
+
+#### Get inside the fronend repo
+
+```bash
+cd app
+cd backend
+```
+
+#### Run the Project
+
+```bash
+python app.py
+```
+
+### 5. Run the Frontend
+
+#### Get inside the frontend repo
+
+```bash
+cd app
+cd Student Performance Tracker
+```
+
+#### Run the Project
+
+```bash
+npm run dev
+```
+
+#### Open the localhost in web browser
+
+```bash
+http://localhost:5173/
 ```
