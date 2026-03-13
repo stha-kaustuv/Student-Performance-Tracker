@@ -10,7 +10,6 @@ This is the Flask-based REST API that powers the Student Performance Tracker. It
 
 ```bash
 
-cd app
 cd backend
 
 ```
