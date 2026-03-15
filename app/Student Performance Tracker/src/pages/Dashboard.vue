@@ -6,8 +6,10 @@ import { onMounted } from "vue";
 
 const modelInfo = ref();
 const modelType = ref();
+const API_URL = import.meta.env.VITE_API_URL;
+
 const getModel = () => {
-  axios.get("http://127.0.0.1:5000/model-info").then((response) => {
+  axios.get(`${API_URL}/model-info`).then((response) => {
     modelInfo.value = response.data;
     modelType.value = modelInfo.value.find(
       (item) => item.title === "Model Type"
@@ -49,7 +51,7 @@ const handlePredict = () => {
     Attendance: form.attendance,
     Previous_Scores: form.previousScore,
   };
-  axios.post("http://127.0.0.1:5000/predict", fullPayload).then((response) => {
+  axios.post(`${API_URL}/predict`, fullPayload).then((response) => {
     predictionResult.value = response.data.predicted_score;
     console.log("Prediction Result:", predictionResult.value);
   });

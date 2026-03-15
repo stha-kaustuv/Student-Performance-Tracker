@@ -8,12 +8,13 @@ const currentPage = ref(1);
 const totalPages = ref(0);
 const totalRecords = ref(0);
 const limit = ref(20);
+const API_URL= import.meta.env.VITE_API_URL
 
 const selectedFilter = ref("");
 
 const getTableData = async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:5000/data", {
+    const response = await axios.get(`${API_URL}/data`, {
       params: {
         page: currentPage.value,
         limit: limit.value,
