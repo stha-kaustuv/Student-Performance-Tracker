@@ -14,7 +14,7 @@ MODEL_PATH = os.path.join(BASE_DIR, "models/student_performance_model.pkl")
 COLUMNS_PATH = os.path.join(BASE_DIR, "models/model_columns.pkl")
 METADATA_PATH = os.path.join(BASE_DIR, "models/model_metadata.json")
 
-DATA_PATH = os.path.join(BASE_DIR, "../data/StudentPerformanceFactors.csv")
+DATA_PATH = os.path.join(BASE_DIR, "data/StudentPerformanceFactors.csv")
 
 model = joblib.load(MODEL_PATH)
 columns = joblib.load(COLUMNS_PATH)
@@ -25,6 +25,11 @@ def load_metadata():
         with open(METADATA_PATH, "r") as f:
             return json.load(f)
     return {"accuracy": "N/A", "mean_squared_error": "N/A"}
+
+
+@app.route("/")
+def home():
+    return jsonify({"message": "API is live!", "version": "1.0"})
 
 
 @app.route("/predict", methods=["POST"])
@@ -78,7 +83,7 @@ def get_all_data():
         limit = int(request.args.get("limit", 20))
         student_filter = request.args.get("filter", None)
 
-        df = pd.read_csv("../data/StudentPerformanceFactors.csv")
+        df = pd.read_csv(DATA_PATH)
 
         df["Exam_Score"] = pd.to_numeric(df["Exam_Score"], errors="coerce")
 
