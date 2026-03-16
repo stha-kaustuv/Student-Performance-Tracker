@@ -13,7 +13,9 @@ import {
     <div class="">
       <div class="p-4 bg-[#1a2b44]">
         <nav class="pr-7 flex items-center gap-2 justify-between">
-          <img :src="hat" alt="hat" class="w-62.5 h-30 object-contain" />
+          <router-link to="/" class="flex items-center gap-2">
+            <img :src="hat" alt="hat" class="w-62.5 h-30 object-contain" />
+          </router-link>
           <p
             class="text-gray-200 hover:text-white cursor-pointer font-semibold text-3xl"
           >

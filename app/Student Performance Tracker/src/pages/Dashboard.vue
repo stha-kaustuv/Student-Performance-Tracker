@@ -7,7 +7,7 @@ import { onMounted } from "vue";
 const modelInfo = ref();
 const modelType = ref();
 const API_URL = import.meta.env.VITE_API_URL;
-
+const isLoading = ref(false);
 const getModel = () => {
   axios.get(`${API_URL}/model-info`).then((response) => {
     modelInfo.value = response.data;
@@ -26,6 +26,7 @@ const model = computed(() => {
   return null;
 });
 const handlePredict = () => {
+  isLoading.value = true;
   const baseProfile = {
     Parental_Involvement: 3,
     Access_to_Resources: 3,
@@ -51,10 +52,21 @@ const handlePredict = () => {
     Attendance: form.attendance,
     Previous_Scores: form.previousScore,
   };
-  axios.post(`${API_URL}/predict`, fullPayload).then((response) => {
-    predictionResult.value = response.data.predicted_score;
-    console.log("Prediction Result:", predictionResult.value);
-  });
+  axios
+    .post(`${API_URL}/predict`, fullPayload)
+    .then((response) => {
+      predictionResult.value = response.data.predicted_score;
+      console.log("Prediction Result:", predictionResult.value);
+    })
+    .catch((error) => {
+      console.error("Error during prediction:", error);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 onMounted(() => {
   getModel();
@@ -371,16 +383,29 @@ const predictionResult = ref(null);
       </div>
 
       <div
-        class="w-1/3 bg-blue-900 text-white rounded-xl p-8 flex flex-col items-center justify-center shadow-xl"
+        class="w-1/3 bg-blue-900 text-white rounded-xl p-8 flex flex-col items-center justify-center shadow-xl relative overflow-hidden"
       >
         <p class="text-blue-200 uppercase tracking-widest text-sm font-bold">
           Predicted Score
         </p>
-        <div class="text-7xl font-black my-4">
-          {{ predictionResult ? predictionResult : "--" }}
+
+        <div v-if="isLoading" class="flex flex-col items-center my-4">
+          <div
+            class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-white mb-2"
+          ></div>
+          <p class="text-xs text-blue-300">Calculating...</p>
         </div>
+
+        <div v-else class="text-7xl font-black my-4">
+          {{ predictionResult !== null ? predictionResult : "--" }}
+        </div>
+
         <p class="text-blue-100 text-center text-sm">
-          This prediction is based on the {{ model }} model.
+          {{
+            isLoading
+              ? "Analyzing student data..."
+              : `This prediction is based on the ${model || "selected"} model.`
+          }}
         </p>
       </div>
     </div>
