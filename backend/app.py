@@ -8,9 +8,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-MODEL_PATH = "models/student_performance_model.pkl"
-COLUMNS_PATH = "models/model_columns.pkl"
-METADATA_PATH = "models/model_metadata.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_PATH = os.path.join(BASE_DIR, "models/student_performance_model.pkl")
+COLUMNS_PATH = os.path.join(BASE_DIR, "models/model_columns.pkl")
+METADATA_PATH = os.path.join(BASE_DIR, "models/model_metadata.json")
+
+DATA_PATH = os.path.join(BASE_DIR, "../data/StudentPerformanceFactors.csv")
 
 model = joblib.load(MODEL_PATH)
 columns = joblib.load(COLUMNS_PATH)
@@ -45,7 +49,7 @@ def get_model_info():
         weights = pd.Series(model.coef_, index=columns)
         top_driver = weights.abs().idxmax()
 
-        df = pd.read_csv("../data/StudentPerformanceFactors.csv")
+        df = pd.read_csv(DATA_PATH)
         df["Exam_Score"] = pd.to_numeric(df["Exam_Score"], errors="coerce")
 
         high_risk_count = df[df["Exam_Score"] < 70].shape[0]
@@ -133,4 +137,4 @@ def get_all_data():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
