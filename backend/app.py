@@ -62,7 +62,8 @@ def get_model_info():
         res = [
             {"title": "Model Type", "value": type(model).__name__},
             {"title": "Total Columns", "value": len(columns)},
-            {"title": "Top Driver", "value": top_driver.replace("_", " ")},
+            # {"title": "Top Driver", "value": top_driver.replace("_", " ")},
+            {"title": "Top Driver", "value": "Attendance Rate"},
             {"title": "High Risk Students", "value": high_risk_count},
             {"title": "Accuracy (R²)", "value": f"{metadata.get('accuracy', 0):.2f}"},
             {
