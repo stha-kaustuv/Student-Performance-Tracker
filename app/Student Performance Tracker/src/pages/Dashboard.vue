@@ -47,7 +47,23 @@ const handlePredict = () => {
   };
 
   const fullPayload = {
-    ...baseProfile,
+    Parental_Involvement: form.parentalInvolvement,
+    Access_to_Resources: form.accessToResources,
+    Extracurricular_Activities: form.extracurricularActivities,
+    Sleep_Hours: form.sleepHours,
+    Motivation_Level: form.motivationLevel,
+    Internet_Access: form.internetAccess,
+    Tutoring_Sessions: form.Tutoring_Sessions,
+    Family_Income: form.familyIncome,
+    Teacher_Quality: form.teacherQuality,
+    School_Type: form.schoolType,
+    Peer_Influence: form.peerInfluence,
+    Physical_Activity: form.Physical_Activity,
+    Learning_Disabilities: form.learningDisabilities,
+    Parental_Education_Level: form.parentalEducation,
+    Distance_from_Home: form.distanceFromHome,
+    Gender: form.gender,
+
     Hours_Studied: form.hoursStudied,
     Attendance: form.attendance,
     Previous_Scores: form.previousScore,
